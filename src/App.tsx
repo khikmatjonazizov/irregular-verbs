@@ -8,8 +8,9 @@ import {
 import {Layout, Menu, Button, theme, Badge} from 'antd';
 import {Link, useSearchParams} from "react-router-dom";
 import {Game} from "./components/game";
+import {} from "antd/lib/layout/layout";
 
-const {Header, Sider, Content} = Layout;
+const {Header, Sider, Content, Footer} = Layout;
 
 const App: React.FC = () => {
     const [params] = useSearchParams()
@@ -97,6 +98,7 @@ const App: React.FC = () => {
                 >
                     <Game page={page} onChange={onChange} />
                 </Content>
+                <Footer style={{padding: '0 16px 24px 16px'}}>By Khikmatjon with love</Footer>
             </Layout>
         </Layout>
     );
