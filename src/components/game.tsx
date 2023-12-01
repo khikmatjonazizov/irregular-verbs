@@ -25,8 +25,8 @@ const getData = (page: string): VerbForms[] => {
 }
 
 export const Game: React.FC<GameProps> = ({page, onChange}) => {
-    const verbs: VerbForms[] = [["go", "went", "gone"], ["take", "took", "taken"], ["do", "did", "done"], ["abide", "abided/abode", "abided/abode"] /* test */];
-    // const verbs: VerbForms[] = getData(page);
+    // const verbs: VerbForms[] = [["go", "went", "gone"], ["take", "took", "taken"], ["do", "did", "done"], ["abide", "abided/abode", "abided/abode"] /* test */];
+    const verbs: VerbForms[] = getData(page);
     const [isFinished, setIsFinished] = useState(false)
     const quiz = useMemo(() => new IrregularVerbQuiz(verbs), [page, isFinished])
     const [form] = Form.useForm();
