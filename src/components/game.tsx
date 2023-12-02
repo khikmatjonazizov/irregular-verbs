@@ -2,6 +2,7 @@ import React, {useCallback, useEffect, useMemo, useState} from "react";
 import data from '../i-verbs.json'
 import {IrregularVerbQuiz, VerbForms} from "./lib/game";
 import {Alert, Button, Form, Input, Space} from "antd";
+import { BorderOutlined } from "@ant-design/icons"
 
 interface GameProps {
     page: string;
@@ -102,9 +103,12 @@ export const Game: React.FC<GameProps> = ({page, onChange}) => {
     return (
         <div>
             {
-                currentQuestion && <p>{currentQuestion.displayed.join(' ')}</p>
+                currentQuestion && (
+                    <p style={{textAlign: 'center', fontSize: '16px', display: 'flex', gap: '20px', justifyContent: 'center'}}>
+                        {currentQuestion.displayed.map(verb => verb === '...' ? <BorderOutlined /> : <span>{verb}</span>)}
+                    </p>
+                )
             }
-
             <Form
                 name="game"
                 layout="vertical"

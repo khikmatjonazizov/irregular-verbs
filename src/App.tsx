@@ -1,24 +1,21 @@
 import React, {useState} from 'react';
 import {
-    MenuFoldOutlined,
-    MenuUnfoldOutlined,
     BookOutlined,
     FileOutlined
 } from '@ant-design/icons';
-import {Layout, Menu, Button, theme, Badge} from 'antd';
+import {Layout, Menu, theme, Badge} from 'antd';
 import {Link, useSearchParams} from "react-router-dom";
 import {Game} from "./components/game";
-import {} from "antd/lib/layout/layout";
 
-const {Header, Sider, Content, Footer} = Layout;
+const {Header, Content, Footer} = Layout;
 
 const App: React.FC = () => {
     const [params] = useSearchParams()
     const page = params.get('game') || 'page1'
-
-    const [collapsed, setCollapsed] = useState(() => window.innerWidth <= 800);
     const {
-        token: {colorBgContainer},
+        token: {
+            colorBgContainer,
+        },
     } = theme.useToken();
 
     const [incorrectAnswersCount, setIncorrectAnswersCount] =
@@ -32,11 +29,12 @@ const App: React.FC = () => {
     }
 
     return (
-        <Layout style={{height: 'inherit'}}>
-            <Sider trigger={null} collapsible collapsed={collapsed}>
+        <Layout className="layout" style={{height: 'inherit', overflow: 'auto'}}>
+            <Header style={{display: 'flex', alignItems: 'center', padding: '0', justifyContent: 'center'}}>
                 <Menu
                     theme="dark"
-                    mode="inline"
+                    mode="horizontal"
+                    inlineCollapsed={false}
                     defaultSelectedKeys={[page]}
                     items={[
                         {
@@ -56,50 +54,29 @@ const App: React.FC = () => {
                         },
                     ]}
                 />
-            </Sider>
-            <Layout>
-                <Header
+            </Header>
+            <Content
+                style={{
+                    margin: '24px 16px',
+                    padding: 24,
+                    minHeight: 280,
+                    background: colorBgContainer,
+                }}
+            >
+                <div
                     style={{
-                        padding: 0,
-                        background: colorBgContainer,
+                        padding: '0 30px 30px 0',
                         display: 'flex',
                         alignItems: 'center',
-                        justifyContent: 'space-between'
-                    }}
-                >
-                    <Button
-                        type="text"
-                        icon={collapsed ? <MenuUnfoldOutlined/> : <MenuFoldOutlined/>}
-                        onClick={() => setCollapsed(!collapsed)}
-                        style={{
-                            fontSize: '16px',
-                            width: 64,
-                            height: 64,
-                        }}
-                    />
-                    <div
-                        style={{
-                            paddingRight: '30px',
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '10px'
-                        }}>
-                        <Badge count={incorrectAnswersCount} showZero/>
-                        <Badge count={correctAnswersCount} showZero color='#52c41a'/>
-                    </div>
-                </Header>
-                <Content
-                    style={{
-                        margin: '24px 16px',
-                        padding: 24,
-                        minHeight: 280,
-                        background: colorBgContainer,
-                    }}
-                >
-                    <Game page={page} onChange={onChange} />
-                </Content>
-                <Footer style={{padding: '0 16px 24px 16px'}}>By Khikmatjon with love</Footer>
-            </Layout>
+                        justifyContent: 'flex-end',
+                        gap: '10px'
+                    }}>
+                    <Badge count={incorrectAnswersCount} showZero/>
+                    <Badge count={correctAnswersCount} showZero color='#52c41a'/>
+                </div>
+                <Game page={page} onChange={onChange}/>
+            </Content>
+            <Footer style={{padding: '0 16px 24px 16px', textAlign: 'center'}}>By Khikmatjon with love</Footer>
         </Layout>
     );
 };
